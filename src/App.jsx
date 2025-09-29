@@ -1,3 +1,5 @@
+import UserForm from "./components/UserForm"
+
 function App() {
 
   return (
@@ -8,7 +10,7 @@ function App() {
 
       {/* Costanti e Utility Globali */}
       <div className="flex flex-col items-center justify-center p-20">
-        <p className="text-white">Questo file conterrà useState, useEffect, API esterne e CRUD</p>
+        <UserForm />
       </div>
     </>
   )
