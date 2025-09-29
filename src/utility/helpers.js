@@ -1,0 +1,1 @@
+// In questo file ci saranno tutte le funzioni di utilità globali
