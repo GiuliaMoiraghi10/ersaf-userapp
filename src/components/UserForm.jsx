@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { createUser } from '../utility/helpers';
 
 export default function UserForm() {
     const [formData, setFormData] = useState({
@@ -21,53 +22,43 @@ export default function UserForm() {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Recupera gli utenti esistenti dal localStorage
-        const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+        try {
+            // Crea il nuovo utente utilizzando la funzione helper
+            createUser(formData);
 
-        // Crea un nuovo utente con un ID univoco
-        const newUser = {
-            id: Date.now(), // Usa timestamp come ID semplice
-            ...formData,
-            dataCreazione: new Date().toISOString()
-        };
+            // Reset del form
+            setFormData({
+                nome: '',
+                cognome: '',
+                email: '',
+                dataNascita: '',
+                citta: '',
+                genere: ''
+            });
 
-        // Aggiungi il nuovo utente alla lista
-        const updatedUsers = [...existingUsers, newUser];
-
-        // Salva nel localStorage
-        localStorage.setItem('users', JSON.stringify(updatedUsers));
-
-        console.log('Utente salvato:', newUser);
-
-        // Reset del form
-        setFormData({
-            nome: '',
-            cognome: '',
-            email: '',
-            dataNascita: '',
-            citta: '',
-            genere: ''
-        });
-
-        // Mostra un messaggio di successo (opzionale)
-        alert('Profilo salvato con successo!');
+            // Mostra un messaggio di successo
+            alert('Profilo salvato con successo!');
+        } catch (error) {
+            console.error('Errore nel salvare il profilo:', error);
+            alert('Errore nel salvare il profilo. Riprova.');
+        }
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md mx-auto">
-                <div className="text-center mb-8">
-                    <div className="mx-auto h-12 w-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-4">
+        <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-6 px-4 rounded-2xl h-full">
+            <div className="max-w-sm mx-auto">
+                <div className="text-center mb-6">
+                    <div className="mx-auto h-10 w-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-3">
                         <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
                     </div>
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">Registrazione</h2>
-                    <p className="text-gray-600">Completa il tuo profilo</p>
+                    <h2 className="text-2xl font-bold text-gray-900 mb-1">Registrazione</h2>
+                    <p className="text-sm text-gray-600">Completa il tuo profilo</p>
                 </div>
 
-                <div className="bg-white shadow-xl rounded-2xl p-8 border-0">
-                    <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="bg-white shadow-xl rounded-2xl p-6 border-0">
+                    <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-1">
                                 <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-2">
@@ -185,7 +176,7 @@ export default function UserForm() {
 
                         <button
                             type="submit"
-                            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold text-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
+                            className="cursor-pointer w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-6 rounded-lg font-semibold text-lg hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transform hover:scale-[1.02] transition-all duration-200 shadow-lg hover:shadow-xl"
                         >
                             Salva Profilo
                         </button>

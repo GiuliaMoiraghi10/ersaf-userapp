@@ -11,9 +11,3 @@ html {
     min-height: 100vh;
     background: linear-gradient(to right, #161331, #1f2770);
 }
-
-body {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
