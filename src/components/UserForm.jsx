@@ -87,11 +87,11 @@ export default function UserForm() {
 
     return (
         <div className="w-full max-w-4xl mx-auto">
-            {/* Contenitore principale con due colonne */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden min-h-[450px] flex">
-                {/* Colonna sinistra - Branding */}
+            {/* Contenitore principale responsive */}
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden min-h-[450px] flex flex-col md:flex-row">
+                {/* Sezione Branding - Sopra su mobile, sinistra su desktop */}
                 <div
-                    className="w-1/2 p-6 flex flex-col justify-center relative"
+                    className="w-full md:w-1/2 p-6 flex flex-col justify-center relative min-h-[200px] md:min-h-0"
                     style={{
                         backgroundImage: `url(${foglieImage})`,
                         backgroundSize: 'cover',
@@ -126,8 +126,8 @@ export default function UserForm() {
                     </div>
                 </div>
 
-                {/* Colonna destra - Form */}
-                <div className="w-1/2 p-6">
+                {/* Sezione Form - Sotto su mobile, destra su desktop */}
+                <div className="w-full md:w-1/2 p-4 md:p-6">
                     <div className="max-w-sm mx-auto">
                         <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">Registrati</h2>
 
