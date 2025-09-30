@@ -10,7 +10,7 @@ export default function HoroscopePanel({ user, onClose }) {
         if (user?.dataNascita) {
             fetchHoroscopeData(user.dataNascita);
         }
-    }, [user]);
+    }, [user?.dataNascita, user?.id]); // Reagisce specificamente ai cambiamenti di data di nascita e ID utente
 
     // Calcola il segno zodiacale dalla data di nascita
     const getZodiacSign = (birthDate) => {

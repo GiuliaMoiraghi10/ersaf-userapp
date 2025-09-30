@@ -13,7 +13,7 @@ export default function AddressPanel({ user, onClose }) {
             setError('Indirizzo non disponibile per questo utente');
             setLoading(false);
         }
-    }, [user]);
+    }, [user?.indirizzo, user?.citta, user?.cap, user?.id]); // Reagisce a cambiamenti di indirizzo, città, CAP e ID utente
 
     const fetchLocationData = async (userData) => {
         try {
@@ -50,14 +50,25 @@ export default function AddressPanel({ user, onClose }) {
 
             const location = data[0];
 
+            // Estrae numero civico dall'indirizzo utente (se presente)
+            const extractHouseNumber = (address) => {
+                const match = address.match(/\b\d+[a-zA-Z]?\b/);
+                return match ? match[0] : '';
+            };
+
+            // Rimuove il numero civico dall'indirizzo per ottenere solo la strada
+            const cleanStreetName = (address) => {
+                return address.replace(/\b\d+[a-zA-Z]?\b/, '').trim();
+            };
+
             // Struttura i dati geografici
             const locationInfo = {
                 latitude: parseFloat(location.lat),
                 longitude: parseFloat(location.lon),
                 displayName: location.display_name,
                 address: {
-                    houseNumber: location.address?.house_number || userData.indirizzo.split(' ')[0] || '',
-                    road: location.address?.road || '',
+                    houseNumber: location.address?.house_number || extractHouseNumber(userData.indirizzo),
+                    road: location.address?.road || cleanStreetName(userData.indirizzo),
                     city: location.address?.city || location.address?.town || location.address?.village || userData.citta,
                     postcode: location.address?.postcode || userData.cap,
                     state: location.address?.state || '',

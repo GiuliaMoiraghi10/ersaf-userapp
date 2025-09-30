@@ -10,7 +10,7 @@ export default function WeatherPanel({ user, onClose }) {
         if (user?.citta) {
             fetchWeatherData(user.citta);
         }
-    }, [user]);
+    }, [user?.citta, user?.id]); // Reagisce specificamente ai cambiamenti di città e ID utente
 
     const fetchWeatherData = async (city) => {
         try {

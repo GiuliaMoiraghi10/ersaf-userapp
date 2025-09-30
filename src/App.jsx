@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import UserForm from "./components/UserForm"
 import UserList from "./components/UserList"
 import InfoPanel from "./components/InfoPanel"
@@ -6,10 +6,51 @@ import WeatherPanel from "./panelAPI/WeatherPanel"
 import HoroscopePanel from "./panelAPI/HoroscopePanel"
 import AddressPanel from "./panelAPI/AddressPanel"
 import Footer from "./components/Footer"
+import { getAllUsers } from "./utility/helpers"
 import foglieImage from "./assets/foglie.jpg"
 
 function App() {
   const [activePanels, setActivePanels] = useState([])
+  const [users, setUsers] = useState([])
+
+  // Sincronizza pannelli con dati utenti aggiornati
+  useEffect(() => {
+    const currentUsers = getAllUsers()
+    setUsers(currentUsers)
+
+    // Aggiorna i pannelli attivi con i dati utenti più recenti
+    setActivePanels(prevPanels => {
+      return prevPanels
+        .map(panel => {
+          // Trova l'utente aggiornato
+          const updatedUser = currentUsers.find(user => user.id === panel.user.id)
+          if (updatedUser) {
+            // Aggiorna il pannello con i nuovi dati utente
+            return { ...panel, user: updatedUser }
+          }
+          return null // Utente eliminato
+        })
+        .filter(Boolean) // Rimuove i pannelli di utenti eliminati
+    })
+  }, []) // Verrà triggerato da UserList e UserForm
+
+  // Funzione per aggiornare i pannelli (chiamata da UserList quando i dati cambiano)
+  const refreshPanels = () => {
+    const currentUsers = getAllUsers()
+    setUsers(currentUsers)
+
+    setActivePanels(prevPanels => {
+      return prevPanels
+        .map(panel => {
+          const updatedUser = currentUsers.find(user => user.id === panel.user.id)
+          if (updatedUser) {
+            return { ...panel, user: updatedUser }
+          }
+          return null
+        })
+        .filter(Boolean)
+    })
+  }
 
   const handleOpenPanel = (panelType, user) => {
     // Controlla se esiste già un pannello per questo utente e tipo
@@ -74,7 +115,7 @@ function App() {
         <div className="space-y-8">
           {/* UserList */}
           <div className="w-full">
-            <UserList onOpenPanel={handleOpenPanel} />
+            <UserList onOpenPanel={handleOpenPanel} onDataChange={refreshPanels} />
           </div>
 
           {/* InfoPanel mobile - solo su mobile */}

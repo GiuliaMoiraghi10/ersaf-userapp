@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getAllUsers, deleteUser, updateUser, searchUsers } from '../utility/helpers';
 import ConfirmationModal from './ConfirmationModal';
 
-export default function UserList({ onOpenPanel }) {
+export default function UserList({ onOpenPanel, onDataChange }) {
     // STATI
     const [users, setUsers] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
@@ -81,6 +81,8 @@ export default function UserList({ onOpenPanel }) {
                     if (success) {
                         setAllUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
                         setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+                        // Notifica App.jsx che i dati sono cambiati
+                        if (onDataChange) onDataChange();
                         hideModal();
                         showModal('success', 'Successo', 'Utente eliminato con successo!', hideModal);
                     } else {
@@ -141,6 +143,8 @@ export default function UserList({ onOpenPanel }) {
                 );
                 setEditingUser(null);
                 setEditFormData({});
+                // Notifica App.jsx che i dati sono cambiati
+                if (onDataChange) onDataChange();
                 showModal('success', 'Successo', 'Utente aggiornato con successo!', hideModal);
             } else {
                 showModal('error', 'Errore', 'Errore nell\'aggiornamento dell\'utente', hideModal);
