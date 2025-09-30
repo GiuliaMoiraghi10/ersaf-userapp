@@ -1,16 +1,22 @@
-# React + Vite
+# ERSAF UserApp 🌿
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Moderna applicazione web per la gestione degli utenti con integrazione di API esterne e design responsive.
 
-Currently, two official plugins are available:
+## ✨ Caratteristiche Principali
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **🎨 Design Moderno**: Interface elegante con gradienti personalizzati
+- **📱 Responsive**: Layout ottimizzato per mobile e desktop
+- **🌍 API Integration**: Meteo, oroscopo e geolocalizzazione
+- **💾 Storage Locale**: Persistenza dati utenti
+- **🔔 Notifiche**: Sistema di modali per feedback
 
-## React Compiler
+## 🚀 Tecnologie
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **React 18** + **Vite** - Framework e build tool
+- **Tailwind CSS** - Styling utility-first
+- **JavaScript ES6+** - Sintassi moderna
+- **External APIs** - wttr.in, OpenStreetMap, Horoscope
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+*Sviluppato con React + Tailwind CSS*
