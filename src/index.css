@@ -9,5 +9,11 @@ body {
 html {
     font-family: "Roboto", sans-serif;
     min-height: 100vh;
-    background: linear-gradient(to right, #161331, #1f2770);
+    /* background: linear-gradient(to right, #161331, #1f2770); */
+    background: linear-gradient(to right, #0b232a, #172634);
+    /* background: linear-gradient(to right, #0b232a, #061117); */
+    /* background: linear-gradient(to right, #2d5016, #1a3409); */
+    /* background: linear-gradient(to right, #1e293b, #0f172a); */
+
+
 }
