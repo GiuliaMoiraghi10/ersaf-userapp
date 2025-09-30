@@ -3,7 +3,7 @@ import { getAllUsers, deleteUser, updateUser, searchUsers } from '../utility/hel
 import ConfirmationModal from './ConfirmationModal';
 
 export default function UserList({ onOpenPanel }) {
-    // === STATI ===
+    // STATI
     const [users, setUsers] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
@@ -19,7 +19,7 @@ export default function UserList({ onOpenPanel }) {
         onConfirm: null
     });
 
-    // === CARICAMENTO UTENTI ===
+    //CARICAMENTO UTENTI
     useEffect(() => {
         const loadUsers = () => {
             try {
@@ -46,7 +46,7 @@ export default function UserList({ onOpenPanel }) {
         };
     }, [searchTerm]);
 
-    // === GESTIONE CRUD ===
+    //GESTIONE CRUD
     const showModal = (type, title, message, onConfirm) => {
         setModalState({
             isOpen: true,
@@ -151,7 +151,7 @@ export default function UserList({ onOpenPanel }) {
         }
     };
 
-    // === FUNZIONI HELPER ===
+    //FUNZIONI HELPER
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('it-IT');
     };
@@ -171,21 +171,21 @@ export default function UserList({ onOpenPanel }) {
     const getGenderIcon = (genere) => {
         switch (genere) {
             case 'maschio':
-                return '👨';
+                return '♂️';
             case 'femmina':
-                return '👩';
+                return '♀️';
             default:
                 return '🌈';
         }
     };
 
-    // === RENDER ===
+    //RENDER
     return (
         <div className="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-6 px-4 rounded-2xl h-full">
             <div className="max-w-full mx-auto">
                 {/* Header */}
                 <div className="text-center mb-6">
-                    <div className="mx-auto h-10 w-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mb-3">
+                    <div className="mx-auto h-10 w-10 bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 rounded-xl flex items-center justify-center mb-3">
                         <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                         </svg>
@@ -230,7 +230,7 @@ export default function UserList({ onOpenPanel }) {
 
                 {/* Lista utenti */}
                 {users.length === 0 ? (
-                    <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+                    <div className="bg-white/95 rounded-xl shadow-lg p-8 text-center">
                         <div className="mx-auto h-24 w-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
                             <svg className="h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
@@ -240,12 +240,12 @@ export default function UserList({ onOpenPanel }) {
                         <p className="text-gray-600">Aggiungi il primo utente compilando il modulo di registrazione!</p>
                     </div>
                 ) : (
-                    <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2">
+                    <div className="grid gap-4 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
                         {users.map((user) => (
                             <div key={user.id}>
                                 {editingUser === user.id ? (
                                     /* Form di modifica */
-                                    <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-blue-200">
+                                    <div className="bg-white/95 rounded-2xl shadow-lg p-6 border-2 border-blue-200 hover:bg-white transition-all duration-300">
                                         <div className="flex items-center justify-between mb-4">
                                             <h3 className="font-semibold text-gray-900 text-lg">Modifica Utente</h3>
                                             <div className="flex space-x-2">
@@ -373,10 +373,10 @@ export default function UserList({ onOpenPanel }) {
                                     </div>
                                 ) : (
                                     /* Card utente */
-                                    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-3 border-0 transform hover:scale-[1.01]">
+                                    <div className="bg-white/95 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-3 border-0 transform hover:scale-[1.01] hover:bg-white">
                                         <div className="flex items-center justify-between mb-3">
-                                            <div className="flex items-center space-x-2">
-                                                <div className="h-8 w-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                                            <div className="flex items-center space-x-3">
+                                                <div className="text-2xl">
                                                     {getGenderIcon(user.genere)}
                                                 </div>
                                                 <div>
@@ -433,10 +433,10 @@ export default function UserList({ onOpenPanel }) {
                                                 </div>
                                                 <button
                                                     onClick={() => onOpenPanel && onOpenPanel('weather', user)}
-                                                    className="text-orange-400 hover:text-orange-600 transition-colors duration-200 p-1 cursor-pointer"
+                                                    className="text-blue-500 hover:text-blue-600 transition-colors duration-200 p-1 cursor-pointer"
                                                     title="Vedi meteo"
                                                 >
-                                                    <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.002 4.002 0 003 15z" />
                                                     </svg>
                                                 </button>
@@ -451,16 +451,16 @@ export default function UserList({ onOpenPanel }) {
                                                 </div>
                                                 <button
                                                     onClick={() => onOpenPanel && onOpenPanel('horoscope', user)}
-                                                    className="text-purple-400 hover:text-purple-600 transition-colors duration-200 p-1 cursor-pointer"
+                                                    className="text-purple-500 hover:text-purple-600 transition-colors duration-200 p-1 cursor-pointer"
                                                     title="Vedi oroscopo"
                                                 >
-                                                    <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                                                     </svg>
                                                 </button>
                                             </div>
 
-                                            {/* Nuovi campi aggiunti */}
+                                            {/* Indirizzo */}
                                             {user.indirizzo && (
                                                 <div className="flex items-center justify-between text-gray-600">
                                                     <div className="flex items-center">
@@ -471,10 +471,10 @@ export default function UserList({ onOpenPanel }) {
                                                     </div>
                                                     <button
                                                         onClick={() => onOpenPanel && onOpenPanel('address', user)}
-                                                        className="text-green-400 hover:text-green-600 transition-colors duration-200 p-1 cursor-pointer"
+                                                        className="text-green-500 hover:text-green-600 transition-colors duration-200 p-1 cursor-pointer"
                                                         title="Vedi coordinate GPS"
                                                     >
-                                                        <svg className="h-3 w-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                                         </svg>

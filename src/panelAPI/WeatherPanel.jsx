@@ -192,16 +192,21 @@ export default function WeatherPanel({ user, onClose }) {
 
     return (
         <div>
-            <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-orange-800 flex items-center">
-                    <svg className="h-7 w-7 mr-3 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.002 4.002 0 003 15z" />
-                    </svg>
-                    Meteo - {user?.nome}
-                </h3>
+            <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                    <div className="h-8 w-8 bg-gradient-to-r from-orange-500 to-red-600 rounded-lg flex items-center justify-center">
+                        <svg className="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.002 4.002 0 003 15z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-semibold text-gray-900">Previsioni Meteo</h3>
+                        <p className="text-sm text-gray-600">{user.nome} {user.cognome}</p>
+                    </div>
+                </div>
                 <button
                     onClick={onClose}
-                    className="text-orange-400 hover:text-orange-600 transition-colors"
+                    className="text-gray-400 hover:text-gray-600 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-100"
                     title="Chiudi pannello"
                 >
                     <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

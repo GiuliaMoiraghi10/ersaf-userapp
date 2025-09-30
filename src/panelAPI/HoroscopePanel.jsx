@@ -57,7 +57,7 @@ export default function HoroscopePanel({ user, onClose }) {
             const zodiacSign = getZodiacSign(birthDate);
             const signNameEn = zodiacSign.nameEn;
 
-            // Prova API Horoscope-API
+            // API Horoscope
             try {
                 const response = await fetch(
                     `https://horoscope-app-api.vercel.app/api/v1/get-horoscope/daily?sign=${signNameEn}&day=today`,
@@ -88,7 +88,7 @@ export default function HoroscopePanel({ user, onClose }) {
                 console.log('API Horoscope non disponibile');
             }
 
-            // Se nessuna API funziona, genera oroscopo intelligente offline
+            // Se nessuna API funziona, genera oroscopo offline
             const horoscopeText = generateSmartHoroscope(zodiacSign.name);
             setHoroscopeData({
                 sign: zodiacSign.name,
@@ -106,7 +106,7 @@ export default function HoroscopePanel({ user, onClose }) {
         }
     };
 
-    // Genera un oroscopo intelligente basato su algoritmi
+    // Genera un oroscopo basato su algoritmi
     const generateSmartHoroscope = (userSign) => {
         const today = new Date();
         const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
@@ -269,16 +269,21 @@ export default function HoroscopePanel({ user, onClose }) {
 
     return (
         <div>
-            <div className="flex justify-between items-center mb-6">
-                <h3 className="text-2xl font-bold text-purple-800 flex items-center">
-                    <svg className="h-7 w-7 mr-3 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
-                    </svg>
-                    Oroscopo - {user?.nome}
-                </h3>
+            <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-3">
+                    <div className="h-8 w-8 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-lg flex items-center justify-center">
+                        <svg className="h-4 w-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 className="text-lg font-semibold text-gray-900">Oroscopo Personalizzato</h3>
+                        <p className="text-sm text-gray-600">{user.nome} {user.cognome}</p>
+                    </div>
+                </div>
                 <button
                     onClick={onClose}
-                    className="text-purple-400 hover:text-purple-600 transition-colors"
+                    className="text-gray-400 hover:text-gray-600 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-100"
                     title="Chiudi pannello"
                 >
                     <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
