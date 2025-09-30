@@ -521,6 +521,7 @@ export default function UserList({ onOpenPanel }) {
                 onClose={hideModal}
                 confirmText={modalState.type === 'warning' ? 'Elimina' : 'OK'}
                 cancelText="Annulla"
+                showCancel={modalState.type === 'warning'} // Mostra Annulla solo per eliminazione
             />
         </div>
     );

@@ -314,7 +314,7 @@ export default function UserForm() {
                 onConfirm={modalState.onConfirm}
                 onClose={hideModal}
                 confirmText="OK"
-                cancelText="Chiudi"
+                showCancel={false} // Solo pulsante OK per le conferme del form
             />
         </div>
     );
