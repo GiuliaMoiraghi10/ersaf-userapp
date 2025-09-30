@@ -5,6 +5,7 @@ import InfoPanel from "./components/InfoPanel"
 import WeatherPanel from "./panelAPI/WeatherPanel"
 import HoroscopePanel from "./panelAPI/HoroscopePanel"
 import AddressPanel from "./panelAPI/AddressPanel"
+import Footer from "./components/Footer"
 import foglieImage from "./assets/foglie.jpg"
 
 function App() {
@@ -138,6 +139,9 @@ function App() {
       <div className="hidden md:block fixed top-20 right-4 z-50">
         <InfoPanel />
       </div>
+
+      {/* Footer */}
+      <Footer />
     </>
   )
 }
