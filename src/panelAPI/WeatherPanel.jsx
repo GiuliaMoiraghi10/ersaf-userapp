@@ -17,10 +17,11 @@ export default function WeatherPanel({ user, onClose }) {
             setLoading(true);
             setError(null);
 
-            // Fetch API
+            // Fetch API - Aggiungo Italia per maggiore precisione
             try {
+                const cityQuery = `${city}, Italy`;
                 const response = await fetch(
-                    `https://wttr.in/${encodeURIComponent(city)}?format=j1`
+                    `https://wttr.in/${encodeURIComponent(cityQuery)}?format=j1`
                 );
 
                 if (response.ok) {
@@ -201,7 +202,10 @@ export default function WeatherPanel({ user, onClose }) {
                     </div>
                     <div>
                         <h3 className="text-lg font-semibold text-gray-900">Previsioni Meteo</h3>
-                        <p className="text-sm text-gray-600">{user.nome} {user.cognome}</p>
+                        <p className="text-sm text-gray-600">{user.nome} {user.cognome} - {user.citta}</p>
+                        {weatherData?.name && weatherData.name !== user.citta && (
+                            <p className="text-xs text-gray-500 italic">Dati da: {weatherData.name}</p>
+                        )}
                     </div>
                 </div>
                 <button

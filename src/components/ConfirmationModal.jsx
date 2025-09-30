@@ -4,8 +4,7 @@ export default function ConfirmationModal({
     onConfirm,
     title = "Conferma azione",
     message = "Sei sicuro di voler continuare?",
-    confirmText = "Conferma",
-    cancelText = "Annulla",
+    confirmText = "OK",
     type = "warning" // warning, success, error, info
 }) {
     if (!isOpen) return null;
@@ -97,20 +96,12 @@ export default function ConfirmationModal({
                     </div>
                 </div>
 
-                {/* Pulsanti */}
-                <div className="bg-gray-50 px-6 py-4 rounded-b-2xl flex space-x-3">
-                    {/* Pulsante Annulla */}
-                    <button
-                        onClick={onClose}
-                        className="cursor-pointer flex-1 px-4 py-2 bg-white text-gray-700 text-sm font-medium rounded-lg border border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition-colors duration-200"
-                    >
-                        {cancelText}
-                    </button>
-
-                    {/* Pulsante Conferma */}
+                {/* Pulsante OK */}
+                <div className="bg-gray-50 px-6 py-4 rounded-b-2xl flex justify-center">
+                    {/* Pulsante OK */}
                     <button
                         onClick={onConfirm}
-                        className={`cursor-pointer flex-1 px-4 py-2 text-white text-sm font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200 ${styles.confirmBtn}`}
+                        className={`cursor-pointer px-8 py-2 text-white text-sm font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200 ${styles.confirmBtn}`}
                     >
                         {confirmText}
                     </button>
