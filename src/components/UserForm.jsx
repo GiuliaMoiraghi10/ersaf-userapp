@@ -175,14 +175,23 @@ export default function UserForm() {
                             </div>
 
                             {/* Data di nascita */}
-                            <div>
+                            <div className="relative">
+                                <label
+                                    htmlFor="dataNascita"
+                                    className={`absolute left-3 text-sm transition-all duration-300 pointer-events-none ${formData.dataNascita
+                                            ? 'text-blue-500 -top-2 text-xs'
+                                            : 'text-gray-400 top-1.5'
+                                        }`}
+                                >
+                                    Data di nascita
+                                </label>
                                 <input
                                     type="date"
                                     id="dataNascita"
                                     name="dataNascita"
                                     value={formData.dataNascita}
                                     onChange={handleChange}
-                                    className="w-full px-3 py-1.5 border-0 border-b border-gray-200 focus:border-blue-500 hover:border-gray-300 focus:ring-0 transition-all duration-300 placeholder-gray-400 bg-transparent text-gray-900 text-sm hover:bg-blue-50/30 focus:bg-blue-50/50"
+                                    className="w-full px-3 py-1.5 pt-6 border-0 border-b border-gray-200 focus:border-blue-500 hover:border-gray-300 focus:ring-0 transition-all duration-300 bg-transparent text-gray-900 text-sm hover:bg-blue-50/30 focus:bg-blue-50/50"
                                     required
                                 />
                             </div>
