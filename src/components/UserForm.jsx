@@ -133,7 +133,7 @@ export default function UserForm() {
 
                         <form onSubmit={handleSubmit} className="space-y-3">
                             {/* Nome e Cognome */}
-                            <div className="grid grid-cols-2 gap-3">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                                 <div>
                                     <input
                                         type="text"
@@ -202,8 +202,8 @@ export default function UserForm() {
                             </div>
 
                             {/* Indirizzo e CAP */}
-                            <div className="grid grid-cols-3 gap-3">
-                                <div className="col-span-2">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <div className="md:col-span-2">
                                     <input
                                         type="text"
                                         id="indirizzo"
