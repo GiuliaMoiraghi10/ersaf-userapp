@@ -1,40 +1,47 @@
 import { useState, useEffect } from 'react';
-import { getAllUsers, deleteUser, updateUser } from '../utility/helpers';
+import { getAllUsers, deleteUser, updateUser, searchUsers } from '../utility/helpers';
 
 export default function UserList() {
+    // === STATI ===
     const [users, setUsers] = useState([]);
+    const [allUsers, setAllUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
     const [editFormData, setEditFormData] = useState({});
+    const [searchTerm, setSearchTerm] = useState('');
 
-    // Carica gli utenti dal localStorage
+    // === CARICAMENTO UTENTI ===
     useEffect(() => {
         const loadUsers = () => {
             try {
                 const savedUsers = getAllUsers();
-                setUsers(savedUsers);
+                setAllUsers(savedUsers);
+                if (searchTerm) {
+                    const filteredUsers = searchUsers(searchTerm);
+                    setUsers(filteredUsers);
+                } else {
+                    setUsers(savedUsers);
+                }
             } catch (error) {
                 console.error('Errore nel caricare gli utenti:', error);
             }
         };
 
         loadUsers();
-
-        // Ascolta i cambiamenti del localStorage per aggiornare la lista in tempo reale
         window.addEventListener('storage', loadUsers);
-
-        // Controlla periodicamente per aggiornamenti (per quando si aggiunge un utente nella stessa finestra)
         const interval = setInterval(loadUsers, 1000);
 
         return () => {
             window.removeEventListener('storage', loadUsers);
             clearInterval(interval);
         };
-    }, []);
+    }, [searchTerm]);
 
+    // === GESTIONE CRUD ===
     const handleDeleteUser = (userId) => {
         try {
             const success = deleteUser(userId);
             if (success) {
+                setAllUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
                 setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
             } else {
                 alert('Errore nell\'eliminazione dell\'utente');
@@ -74,6 +81,11 @@ export default function UserList() {
         try {
             const updatedUser = updateUser(userId, editFormData);
             if (updatedUser) {
+                setAllUsers(prevUsers =>
+                    prevUsers.map(user =>
+                        user.id === userId ? updatedUser : user
+                    )
+                );
                 setUsers(prevUsers =>
                     prevUsers.map(user =>
                         user.id === userId ? updatedUser : user
@@ -91,8 +103,21 @@ export default function UserList() {
         }
     };
 
+    // === FUNZIONI HELPER ===
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('it-IT');
+    };
+
+    const handleSearch = (e) => {
+        const term = e.target.value;
+        setSearchTerm(term);
+
+        if (term) {
+            const filteredUsers = searchUsers(term);
+            setUsers(filteredUsers);
+        } else {
+            setUsers(allUsers);
+        }
     };
 
     const getGenderIcon = (genere) => {
@@ -106,9 +131,11 @@ export default function UserList() {
         }
     };
 
+    // === RENDER ===
     return (
         <div className="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-6 px-4 rounded-2xl h-full">
             <div className="max-w-full mx-auto">
+                {/* Header */}
                 <div className="text-center mb-6">
                     <div className="mx-auto h-10 w-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl flex items-center justify-center mb-3">
                         <svg className="h-5 w-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -117,10 +144,43 @@ export default function UserList() {
                     </div>
                     <h2 className="text-2xl font-bold text-gray-900 mb-1">Lista Utenti</h2>
                     <p className="text-gray-600">
-                        {users.length === 0 ? 'Nessun utente registrato' : `${users.length} utent${users.length === 1 ? 'e' : 'i'} registrat${users.length === 1 ? 'o' : 'i'}`}
+                        {users.length === 0 ? (searchTerm ? 'Nessun risultato trovato' : 'Nessun utente registrato') : `${users.length} utent${users.length === 1 ? 'e' : 'i'} ${searchTerm ? 'trovat' : 'registrat'}${users.length === 1 ? (searchTerm ? 'o' : 'o') : 'i'}`}
                     </p>
                 </div>
 
+                {/* Campo di ricerca */}
+                <div className="mb-6">
+                    <div className="relative max-w-md mx-auto">
+                        <input
+                            type="text"
+                            placeholder="Cerca per nome, cognome, email o città..."
+                            value={searchTerm}
+                            onChange={handleSearch}
+                            className="w-full px-4 py-3 pl-12 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 bg-white shadow-sm"
+                        />
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                            <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        {searchTerm && (
+                            <button
+                                onClick={() => {
+                                    setSearchTerm('');
+                                    setUsers(allUsers);
+                                }}
+                                className="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer text-gray-400 hover:text-gray-600 transition-colors duration-200"
+                                title="Cancella ricerca"
+                            >
+                                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        )}
+                    </div>
+                </div>
+
+                {/* Lista utenti */}
                 {users.length === 0 ? (
                     <div className="bg-white rounded-xl shadow-lg p-8 text-center">
                         <div className="mx-auto h-24 w-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
@@ -136,6 +196,7 @@ export default function UserList() {
                         {users.map((user) => (
                             <div key={user.id}>
                                 {editingUser === user.id ? (
+                                    /* Form di modifica */
                                     <div className="bg-white rounded-2xl shadow-lg p-6 border-2 border-blue-200">
                                         <div className="flex items-center justify-between mb-4">
                                             <h3 className="font-semibold text-gray-900 text-lg">Modifica Utente</h3>
@@ -221,6 +282,7 @@ export default function UserList() {
                                         </div>
                                     </div>
                                 ) : (
+                                    /* Card utente */
                                     <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 p-4 border-0 transform hover:scale-[1.02]">
                                         <div className="flex items-center justify-between mb-4">
                                             <div className="flex items-center space-x-3">
