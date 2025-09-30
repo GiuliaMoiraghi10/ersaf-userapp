@@ -104,7 +104,11 @@ export default function UserList({ onOpenPanel }) {
             email: user.email,
             dataNascita: user.dataNascita,
             citta: user.citta,
-            genere: user.genere
+            genere: user.genere,
+            indirizzo: user.indirizzo || '',
+            cap: user.cap || '',
+            nazionalita: user.nazionalita || '',
+            telefono: user.telefono || ''
         });
     };
 
@@ -323,6 +327,48 @@ export default function UserList({ onOpenPanel }) {
                                                 <option value="femmina">Femmina</option>
                                                 <option value="altro">Altro</option>
                                             </select>
+
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <input
+                                                    type="text"
+                                                    name="indirizzo"
+                                                    value={editFormData.indirizzo}
+                                                    onChange={handleEditChange}
+                                                    placeholder="Indirizzo"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="cap"
+                                                    value={editFormData.cap}
+                                                    onChange={handleEditChange}
+                                                    placeholder="CAP"
+                                                    pattern="[0-9]{5}"
+                                                    maxLength="5"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                                />
+                                            </div>
+
+                                            <div className="grid grid-cols-2 gap-4">
+                                                <select
+                                                    name="nazionalita"
+                                                    value={editFormData.nazionalita}
+                                                    onChange={handleEditChange}
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-white"
+                                                >
+                                                    <option value="">Seleziona nazionalità</option>
+                                                    <option value="italiana">Italiana</option>
+                                                    <option value="straniera">Straniera</option>
+                                                </select>
+                                                <input
+                                                    type="tel"
+                                                    name="telefono"
+                                                    value={editFormData.telefono}
+                                                    onChange={handleEditChange}
+                                                    placeholder="Numero di telefono"
+                                                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 ) : (
@@ -404,6 +450,47 @@ export default function UserList({ onOpenPanel }) {
                                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
                                                     </svg>
                                                 </button>
+                                            </div>
+
+                                            {/* Nuovi campi aggiunti */}
+                                            {user.indirizzo && (
+                                                <div className="flex items-center justify-between text-gray-600">
+                                                    <div className="flex items-center">
+                                                        <svg className="h-4 w-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                                        </svg>
+                                                        <span className="text-sm">{user.indirizzo}{user.cap && `, ${user.cap}`}</span>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => onOpenPanel && onOpenPanel('address', user)}
+                                                        className="text-green-400 hover:text-green-600 transition-colors duration-200 p-1 cursor-pointer"
+                                                        title="Vedi coordinate GPS"
+                                                    >
+                                                        <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            )}
+
+                                            <div className="grid grid-cols-2 gap-4">
+                                                {user.nazionalita && (
+                                                    <div className="flex items-center text-gray-600">
+                                                        <svg className="h-4 w-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                        <span className="text-sm capitalize">{user.nazionalita}</span>
+                                                    </div>
+                                                )}
+                                                {user.telefono && (
+                                                    <div className="flex items-center text-gray-600">
+                                                        <svg className="h-4 w-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                                        </svg>
+                                                        <span className="text-sm">{user.telefono}</span>
+                                                    </div>
+                                                )}
                                             </div>
 
                                             <div className="pt-2 border-t border-gray-100">

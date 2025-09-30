@@ -211,9 +211,9 @@ export default function WeatherPanel({ user, onClose }) {
             </div>
 
             {weatherData && (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div className="space-y-4">
                     {/* Temperatura principale */}
-                    <div className="bg-white rounded-xl p-4 shadow-lg text-center min-h-[200px] flex flex-col justify-center">
+                    <div className="bg-white rounded-xl p-4 shadow-lg text-center flex flex-col justify-center">
                         <div className="text-4xl mb-2">{getWeatherIcon(weatherData.weather[0].icon)}</div>
                         <div className="text-2xl font-bold text-orange-600 mb-2">
                             {weatherData.main.temp}°C
@@ -230,7 +230,7 @@ export default function WeatherPanel({ user, onClose }) {
                     </div>
 
                     {/* Dettagli atmosferici */}
-                    <div className="bg-white rounded-xl p-4 shadow-lg min-h-[200px] flex flex-col text-center">
+                    <div className="bg-white rounded-xl p-4 shadow-lg flex flex-col text-center">
                         <h4 className="text-base font-semibold text-gray-800 mb-3">Condizioni</h4>
                         <div className="space-y-3 flex-1 flex flex-col justify-center">
                             <div className="flex flex-col items-center">
@@ -251,7 +251,7 @@ export default function WeatherPanel({ user, onClose }) {
                     </div>
 
                     {/* Vento */}
-                    <div className="bg-white rounded-xl p-4 shadow-lg min-h-[200px] flex flex-col justify-center">
+                    <div className="bg-white rounded-xl p-4 shadow-lg flex flex-col justify-center">
                         <h4 className="text-base font-semibold text-gray-800 mb-3 text-center">Vento</h4>
                         <div className="text-center flex-1 flex flex-col justify-center">
                             <div className="text-xl mb-2">🌪️</div>
