@@ -74,6 +74,12 @@ export default function UserForm() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        if (!emailPattern.test(formData.email)) {
+            alert('Inserisci un indirizzo email valido che contenga @ e . (es. nome@dominio.com)');
+            return;
+        }
+
         try {
             await createUser(formData);
             showModal('success', 'Successo!', 'Utente registrato con successo!', () => {
