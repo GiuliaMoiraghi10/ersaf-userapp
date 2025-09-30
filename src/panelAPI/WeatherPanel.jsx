@@ -210,7 +210,7 @@ export default function WeatherPanel({ user, onClose }) {
                 </div>
                 <button
                     onClick={onClose}
-                    className="text-gray-400 hover:text-gray-600 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-100"
+                    className="cursor-pointer text-gray-400 hover:text-gray-600 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-100"
                     title="Chiudi pannello"
                 >
                     <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

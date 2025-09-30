@@ -283,7 +283,7 @@ export default function HoroscopePanel({ user, onClose }) {
                 </div>
                 <button
                     onClick={onClose}
-                    className="text-gray-400 hover:text-gray-600 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-100"
+                    className="cursor-pointer text-gray-400 hover:text-gray-600 transition-colors duration-200 p-2 rounded-lg hover:bg-gray-100"
                     title="Chiudi pannello"
                 >
                     <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -298,17 +298,9 @@ export default function HoroscopePanel({ user, onClose }) {
                         <div className="text-6xl mb-3">
                             {getZodiacIcon(horoscopeData.sign)}
                         </div>
-                        <h4 className="text-2xl font-bold text-purple-800 capitalize mb-2">
+                        <h4 className="text-2xl font-bold text-purple-800 capitalize mb-4">
                             {horoscopeData.sign}
                         </h4>
-                        <p className="text-gray-600">
-                            {new Date(horoscopeData.date).toLocaleDateString('it-IT', {
-                                weekday: 'long',
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            })}
-                        </p>
                     </div>
 
                     <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-lg p-6">
