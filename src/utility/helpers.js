@@ -45,7 +45,7 @@ export const createUser = (userData) => {
 };
 
 // Aggiorna un utente esistente
-export const updateUser = (id, userData) => {
+export const updateUser = (id, updatedData) => {
     try {
         const users = getAllUsers();
         const userIndex = users.findIndex(user => user.id === id);
@@ -58,7 +58,7 @@ export const updateUser = (id, userData) => {
         // Aggiorna l'utente mantenendo l'ID e la data di creazione
         const updatedUser = {
             ...users[userIndex],
-            ...userData,
+            ...updatedData,
             id: users[userIndex].id, // Mantieni l'ID originale
             dataCreazione: users[userIndex].dataCreazione, // Mantieni la data originale
             dataModifica: new Date().toISOString() // Aggiungi timestamp di modifica

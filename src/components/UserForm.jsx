@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { createUser } from '../utility/helpers';
 import ConfirmationModal from './ConfirmationModal';
 
+// Componente form per la registrazione di nuovi utenti
 export default function UserForm() {
     const [formData, setFormData] = useState({
         nome: '',
@@ -77,7 +78,7 @@ export default function UserForm() {
 
     return (
         <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-6 px-4 rounded-2xl h-full">
-            <div className="max-w-sm mx-auto">
+            <div className="max-w-2xl mx-auto">
                 <div className="text-center mb-6">
                     <div className="mx-auto h-10 w-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center mb-3">
                         <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -88,8 +89,8 @@ export default function UserForm() {
                     <p className="text-sm text-gray-600">Completa il tuo profilo</p>
                 </div>
 
-                <div className="bg-white shadow-xl rounded-2xl p-6 border-0">
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="bg-white shadow-xl rounded-2xl p-8 border-0">
+                    <form onSubmit={handleSubmit} className="space-y-6">
                         <div className="grid grid-cols-2 gap-4">
                             <div className="space-y-1">
                                 <label htmlFor="nome" className="block text-sm font-medium text-gray-700 mb-2">

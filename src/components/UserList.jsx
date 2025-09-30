@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { getAllUsers, deleteUser, updateUser, searchUsers } from '../utility/helpers';
 import ConfirmationModal from './ConfirmationModal';
 
-export default function UserList() {
+export default function UserList({ onOpenPanel }) {
     // === STATI ===
     const [users, setUsers] = useState([]);
     const [allUsers, setAllUsers] = useState([]);
@@ -369,19 +369,41 @@ export default function UserList() {
                                                 <span className="text-sm">{user.email}</span>
                                             </div>
 
-                                            <div className="flex items-center text-gray-600">
-                                                <svg className="h-4 w-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                                </svg>
-                                                <span className="text-sm">{user.citta}</span>
+                                            <div className="flex items-center justify-between text-gray-600">
+                                                <div className="flex items-center">
+                                                    <svg className="h-4 w-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                    </svg>
+                                                    <span className="text-sm">{user.citta}</span>
+                                                </div>
+                                                <button
+                                                    onClick={() => onOpenPanel && onOpenPanel('weather', user)}
+                                                    className="text-orange-400 hover:text-orange-600 transition-colors duration-200 p-1 cursor-pointer"
+                                                    title="Vedi meteo"
+                                                >
+                                                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.002 4.002 0 003 15z" />
+                                                    </svg>
+                                                </button>
                                             </div>
 
-                                            <div className="flex items-center text-gray-600">
-                                                <svg className="h-4 w-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a4 4 0 118 0v4m-4 8a2 2 0 100-4 2 2 0 000 4zm6-2a6 6 0 11-12 0 6 6 0 0112 0z" />
-                                                </svg>
-                                                <span className="text-sm">Nato il {formatDate(user.dataNascita)}</span>
+                                            <div className="flex items-center justify-between text-gray-600">
+                                                <div className="flex items-center">
+                                                    <svg className="h-4 w-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3a4 4 0 118 0v4m-4 8a2 2 0 100-4 2 2 0 000 4zm6-2a6 6 0 11-12 0 6 6 0 0112 0z" />
+                                                    </svg>
+                                                    <span className="text-sm">Nato il {formatDate(user.dataNascita)}</span>
+                                                </div>
+                                                <button
+                                                    onClick={() => onOpenPanel && onOpenPanel('horoscope', user)}
+                                                    className="text-purple-400 hover:text-purple-600 transition-colors duration-200 p-1 cursor-pointer"
+                                                    title="Vedi oroscopo"
+                                                >
+                                                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                                                    </svg>
+                                                </button>
                                             </div>
 
                                             <div className="pt-2 border-t border-gray-100">
