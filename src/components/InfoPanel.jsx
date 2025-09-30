@@ -1,6 +1,6 @@
 export default function InfoPanel() {
     return (
-        <div className="fixed top-32 right-0 w-24 md:w-32 xl:w-40 bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 rounded-l-lg shadow-2xl p-1.5 md:p-2 xl:p-3 z-50 transform translate-x-0 hover:translate-x-1 transition-transform duration-300 border-l-2 xl:border-l-4 border-emerald-300">
+        <div className="md:fixed md:top-32 md:right-0 w-80 md:w-24 md:md:w-32 xl:w-40 bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-500 rounded-2xl md:rounded-l-lg md:rounded-r-none shadow-2xl p-3 md:p-1.5 md:md:p-2 xl:p-3 md:z-50 transform translate-x-0 md:hover:translate-x-1 transition-transform duration-300 border-l-2 xl:border-l-4 border-emerald-300 md:border-l-2 xl:md:border-l-4 border md:border-0 border-emerald-300">
             <div className="text-center">
                 <div className="flex items-center justify-center mb-1 md:mb-2">
                     <div className="h-4 w-4 md:h-5 md:w-5 xl:h-6 xl:w-6 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center mr-1 xl:mr-2 border border-white/30">

@@ -57,7 +57,7 @@ function App() {
           </div>
           <div className="relative flex justify-center">
             <div className="bg-white px-6 py-3 rounded-xl shadow-md border border-gray-200 flex items-center space-x-3">
-              <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(to right, #1e293b, #0f172a)' }}>
+              <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(to right, #0b232a, #172634)' }}>
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
@@ -74,6 +74,11 @@ function App() {
           {/* UserList */}
           <div className="w-full">
             <UserList onOpenPanel={handleOpenPanel} />
+          </div>
+
+          {/* InfoPanel mobile - solo su mobile */}
+          <div className="md:hidden w-full flex justify-center">
+            <InfoPanel />
           </div>
 
           {/* Pannelli API */}
@@ -129,8 +134,10 @@ function App() {
         </div>
       </div>
 
-      {/* InfoPanel */}
-      <InfoPanel />
+      {/* InfoPanel flottante - solo su desktop */}
+      <div className="hidden md:block fixed top-20 right-4 z-50">
+        <InfoPanel />
+      </div>
     </>
   )
 }
