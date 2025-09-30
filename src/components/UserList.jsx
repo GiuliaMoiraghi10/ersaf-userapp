@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getAllUsers, deleteUser, updateUser, searchUsers } from '../utility/helpers';
+import ConfirmationModal from './ConfirmationModal';
 
 export default function UserList() {
     // === STATI ===
@@ -8,6 +9,15 @@ export default function UserList() {
     const [editingUser, setEditingUser] = useState(null);
     const [editFormData, setEditFormData] = useState({});
     const [searchTerm, setSearchTerm] = useState('');
+
+    // Stati per le modali
+    const [modalState, setModalState] = useState({
+        isOpen: false,
+        type: 'warning',
+        title: '',
+        message: '',
+        onConfirm: null
+    });
 
     // === CARICAMENTO UTENTI ===
     useEffect(() => {
@@ -37,19 +47,53 @@ export default function UserList() {
     }, [searchTerm]);
 
     // === GESTIONE CRUD ===
+    const showModal = (type, title, message, onConfirm) => {
+        setModalState({
+            isOpen: true,
+            type,
+            title,
+            message,
+            onConfirm
+        });
+    };
+
+    const hideModal = () => {
+        setModalState({
+            isOpen: false,
+            type: 'warning',
+            title: '',
+            message: '',
+            onConfirm: null
+        });
+    };
+
     const handleDeleteUser = (userId) => {
-        try {
-            const success = deleteUser(userId);
-            if (success) {
-                setAllUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
-                setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
-            } else {
-                alert('Errore nell\'eliminazione dell\'utente');
+        const user = users.find(u => u.id === userId);
+        const userName = user ? `${user.nome} ${user.cognome}` : 'questo utente';
+
+        showModal(
+            'warning',
+            'Conferma eliminazione',
+            `Sei sicuro di voler eliminare ${userName}? Questa azione non può essere annullata.`,
+            () => {
+                try {
+                    const success = deleteUser(userId);
+                    if (success) {
+                        setAllUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+                        setUsers(prevUsers => prevUsers.filter(user => user.id !== userId));
+                        hideModal();
+                        showModal('success', 'Successo', 'Utente eliminato con successo!', hideModal);
+                    } else {
+                        hideModal();
+                        showModal('error', 'Errore', 'Errore nell\'eliminazione dell\'utente', hideModal);
+                    }
+                } catch (error) {
+                    console.error('Errore nell\'eliminare l\'utente:', error);
+                    hideModal();
+                    showModal('error', 'Errore', 'Errore nell\'eliminazione dell\'utente', hideModal);
+                }
             }
-        } catch (error) {
-            console.error('Errore nell\'eliminare l\'utente:', error);
-            alert('Errore nell\'eliminazione dell\'utente');
-        }
+        );
     };
 
     const handleEditUser = (user) => {
@@ -93,13 +137,13 @@ export default function UserList() {
                 );
                 setEditingUser(null);
                 setEditFormData({});
-                alert('Utente aggiornato con successo!');
+                showModal('success', 'Successo', 'Utente aggiornato con successo!', hideModal);
             } else {
-                alert('Errore nell\'aggiornamento dell\'utente');
+                showModal('error', 'Errore', 'Errore nell\'aggiornamento dell\'utente', hideModal);
             }
         } catch (error) {
             console.error('Errore nell\'aggiornare l\'utente:', error);
-            alert('Errore nell\'aggiornamento dell\'utente');
+            showModal('error', 'Errore', 'Errore nell\'aggiornamento dell\'utente', hideModal);
         }
     };
 
@@ -358,6 +402,18 @@ export default function UserList() {
                     </div>
                 )}
             </div>
+
+            {/* Modale di conferma */}
+            <ConfirmationModal
+                isOpen={modalState.isOpen}
+                type={modalState.type}
+                title={modalState.title}
+                message={modalState.message}
+                onConfirm={modalState.onConfirm}
+                onClose={hideModal}
+                confirmText={modalState.type === 'warning' ? 'Elimina' : 'OK'}
+                cancelText="Annulla"
+            />
         </div>
     );
 }

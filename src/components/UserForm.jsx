@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createUser } from '../utility/helpers';
+import ConfirmationModal from './ConfirmationModal';
 
 export default function UserForm() {
     const [formData, setFormData] = useState({
@@ -11,12 +12,42 @@ export default function UserForm() {
         genere: ''
     });
 
+    // Stati per le modali
+    const [modalState, setModalState] = useState({
+        isOpen: false,
+        type: 'success',
+        title: '',
+        message: '',
+        onConfirm: null
+    });
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: value
         }));
+    };
+
+    // Funzioni per gestire le modali
+    const showModal = (type, title, message, onConfirm) => {
+        setModalState({
+            isOpen: true,
+            type,
+            title,
+            message,
+            onConfirm
+        });
+    };
+
+    const hideModal = () => {
+        setModalState({
+            isOpen: false,
+            type: 'success',
+            title: '',
+            message: '',
+            onConfirm: null
+        });
     };
 
     const handleSubmit = (e) => {
@@ -36,11 +67,11 @@ export default function UserForm() {
                 genere: ''
             });
 
-            // Mostra un messaggio di successo
-            alert('Profilo salvato con successo!');
+            // Mostra modale di successo
+            showModal('success', 'Successo', 'Profilo salvato con successo!', hideModal);
         } catch (error) {
             console.error('Errore nel salvare il profilo:', error);
-            alert('Errore nel salvare il profilo. Riprova.');
+            showModal('error', 'Errore', 'Errore nel salvare il profilo. Riprova.', hideModal);
         }
     };
 
@@ -187,6 +218,18 @@ export default function UserForm() {
                     I tuoi dati sono al sicuro con noi 🔒
                 </p>
             </div>
+
+            {/* Modale di conferma */}
+            <ConfirmationModal
+                isOpen={modalState.isOpen}
+                type={modalState.type}
+                title={modalState.title}
+                message={modalState.message}
+                onConfirm={modalState.onConfirm}
+                onClose={hideModal}
+                confirmText="OK"
+                cancelText="Chiudi"
+            />
         </div>
     );
 }
