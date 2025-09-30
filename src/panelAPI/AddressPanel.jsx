@@ -28,7 +28,7 @@ export default function AddressPanel({ user, onClose }) {
                 'Italy'
             ].filter(Boolean).join(', ');
 
-            // API Nominatim di OpenStreetMap (gratuita e affidabile)
+            // API Nominatim di OpenStreetMap
             const response = await fetch(
                 `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=1&q=${encodeURIComponent(searchQuery)}`,
                 {
