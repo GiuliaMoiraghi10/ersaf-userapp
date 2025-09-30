@@ -437,7 +437,7 @@ export default function UserList({ onOpenPanel, onDataChange }) {
                                                 </div>
                                                 <button
                                                     onClick={() => onOpenPanel && onOpenPanel('weather', user)}
-                                                    className="text-blue-500 hover:text-blue-600 transition-colors duration-200 p-1 cursor-pointer"
+                                                    className="text-orange-500 hover:text-orange-600 transition-colors duration-200 p-1 cursor-pointer"
                                                     title="Vedi meteo"
                                                 >
                                                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
